@@ -4,10 +4,19 @@ using namespace std;
 
 struct Node{
     char ch;
-    int frequency;
+    int freq;
     Node* left;
     Node* right;
+
+    Node(char character,int frequency){
+        ch = character;
+        freq = frequency;
+        left = nullptr;
+        right = nullptr;
+    }
 };
+
+
 
 int main(void){
     ifstream file("example.txt");
