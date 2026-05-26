@@ -2,6 +2,13 @@
 #include<fstream>
 using namespace std;
 
+struct Node{
+    char ch;
+    int frequency;
+    Node* left;
+    Node* right;
+};
+
 int main(void){
     ifstream file("example.txt");
 
