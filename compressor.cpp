@@ -1,5 +1,7 @@
 #include<iostream>
 #include<fstream>
+#include<queue>
+#include<vector>
 using namespace std;
 
 struct Node{
@@ -51,6 +53,30 @@ int main(void){
                 cout << "ASCII " << i << " : " << frequency[i] << endl;
         }
         }
+    }
+
+    priority_queue<Node*, vector<Node*>, CompareNodes> minHeap;
+
+    for(int i=0;i<256;i++){
+        if(frequency[i] > 0){
+            minHeap.push(new Node((char)i, frequency[i]));
+        }
+    }
+
+    while (minHeap.size() > 1){
+        Node* leftChild = minHeap.top();
+        minHeap.pop();
+
+        Node* rightChild = minHeap.top();
+        minHeap.pop();
+
+        int combinedFrequency =  leftChild->freq + rightChild->freq;
+        Node* parentNode = new Node('\0',combinedFrequency);
+
+        parentNode->left = leftChild;
+        parentNode->right = rightChild;
+
+        minHeap.push(parentNode);
     }
 
     return 0;
