@@ -16,6 +16,12 @@ struct Node{
     }
 };
 
+struct CompareNodes{
+    bool operator()(Node* const& n1,Node* const& n2){
+        return n1->freq > n2->freq;
+    }
+};
+
 
 
 int main(void){
