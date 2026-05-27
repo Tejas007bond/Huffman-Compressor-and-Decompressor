@@ -65,6 +65,11 @@ int main(void){
         }
     }
 
+    if(minHeap.empty()){
+        cout << "The file is empty nothing to compress." << endl;
+        return 0;
+    }
+
     while (minHeap.size() > 1){
         Node* leftChild = minHeap.top();
         minHeap.pop();
@@ -82,6 +87,13 @@ int main(void){
     }
 
     Node* root = minHeap.top();
+    string code[256];
+    generateCode(root,"",code);
+    for(int i=0;i<256;i++){
+        if(!code[i].empty()){
+            cout << (char)i << " : " << code[i] << endl;
+        }
+    }
 
     return 0;
 }
