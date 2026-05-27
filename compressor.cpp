@@ -2,6 +2,8 @@
 #include<fstream>
 #include<queue>
 #include<vector>
+#include<string>
+#include<unordered_map>
 using namespace std;
 
 struct Node{
@@ -24,7 +26,19 @@ struct CompareNodes{
     }
 };
 
+void generateCode(Node* root,string code,string* huffmanCodes){
+    if(root == nullptr){
+        return;
+    }
 
+    if(root->left == nullptr && root->right == nullptr){
+        huffmanCodes[(unsigned char)root->ch] = code;
+        return;
+    }
+
+    generateCode(root->left,code+"0",huffmanCodes);
+    generateCode(root->right,code+"1",huffmanCodes);
+}
 
 int main(void){
     ifstream file("example.txt");
@@ -42,19 +56,7 @@ int main(void){
     }
 
     file.close();
-
-    for(int i=0;i<256;i++){
-        if(frequency[i] > 0){
-            if (i > 32 && i < 127) {
-                cout << "'" << (char)i << "' : " << frequency[i] << endl;
-        } 
-        
-        else {
-                cout << "ASCII " << i << " : " << frequency[i] << endl;
-        }
-        }
-    }
-
+    
     priority_queue<Node*, vector<Node*>, CompareNodes> minHeap;
 
     for(int i=0;i<256;i++){
@@ -78,6 +80,8 @@ int main(void){
 
         minHeap.push(parentNode);
     }
+
+    Node* root = minHeap.top();
 
     return 0;
 }
