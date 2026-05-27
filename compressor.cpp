@@ -88,7 +88,13 @@ int main(void){
 
     Node* root = minHeap.top();
     string code[256];
-    generateCode(root,"",code);
+
+    if(root->left == nullptr && root->right == nullptr){
+        code[(unsigned char)root->ch] = "0";
+    }
+    else{
+            generateCode(root,"",code);
+    }
     for(int i=0;i<256;i++){
         if(!code[i].empty()){
             cout << (char)i << " : " << code[i] << endl;
