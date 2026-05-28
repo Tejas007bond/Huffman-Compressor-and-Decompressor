@@ -3,7 +3,7 @@
 #include<queue>
 #include<vector>
 #include<string>
-#include<unordered_map>
+
 using namespace std;
 
 struct Node{
@@ -38,6 +38,49 @@ void generateCode(Node* root,string code,string* huffmanCodes){
 
     generateCode(root->left,code+"0",huffmanCodes);
     generateCode(root->right,code+"1",huffmanCodes);
+}
+
+void writeCompressedFile(const string& inputPath,const string& outputPath,int* frequency,string* huffmanCodes){
+    ifstream inFile(inputPath,ios::binary);
+    ofstream outFile(outputPath,ios::binary);
+
+    if(!inFile || !outFile){
+        cout << "Error opening files during the compression phase" << endl;
+        return;
+    }
+
+    outFile.write(reinterpret_cast<const char*>(frequency),256*sizeof(int));
+
+    unsigned char bitbuffer = 0;
+    int bitcount = 0;
+    char ch;
+
+    while(inFile.get(ch)){
+        string code = huffmanCodes[(unsigned char)ch];
+
+        for(char bit : code){
+            bitbuffer = bitbuffer << 1;
+            
+            if(bit == '1'){
+                bitbuffer = bitbuffer | 1;
+            }
+            bitcount++;
+
+            if(bitcount == 8){
+                outFile.put(bitbuffer);
+                bitbuffer = 0;
+                bitcount = 0;
+            }
+        }
+    }
+
+    if(bitcount > 0){
+        bitbuffer = bitbuffer << (8-bitcount);
+        outFile.put(bitbuffer);
+    }
+    inFile.close();
+    outFile.close();
+    cout << "Compression complete. Binary file saved." << endl;
 }
 
 int main(void){
@@ -95,11 +138,8 @@ int main(void){
     else{
             generateCode(root,"",code);
     }
-    for(int i=0;i<256;i++){
-        if(!code[i].empty()){
-            cout << (char)i << " : " << code[i] << endl;
-        }
-    }
+
+    writeCompressedFile("example.txt","compressed.bin",frequency,code);
 
     return 0;
 }
