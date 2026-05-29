@@ -13,7 +13,7 @@ void decompressFile(const string& inputPath,const string& outputPath){
     }
 
     int frequency[256] = {0};
-    
+    inFile.read(reinterpret_cast<char*>(frequency),256*sizeof(int));
 }
 
 int main(void){
