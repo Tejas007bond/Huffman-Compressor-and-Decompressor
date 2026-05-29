@@ -84,7 +84,8 @@ void writeCompressedFile(const string& inputPath,const string& outputPath,int* f
 }
 
 int main(void){
-    ifstream file("example.txt");
+    // Only txt files are supported
+    ifstream file("example.txt"); //Change the filename inside the brackets to compress that file
 
     if(!file){
         cout << "Unable to open file" << endl;
