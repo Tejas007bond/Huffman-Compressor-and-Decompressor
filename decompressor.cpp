@@ -36,6 +36,13 @@ int main(){
         minHeap.push(parent);
     }
 
+    if (!minHeap.empty() && minHeap.top()->left == nullptr && minHeap.top()->right == nullptr) {
+        Node* singleLeaf = minHeap.top(); minHeap.pop();
+        Node* parent = new Node('\0', singleLeaf->freq);
+        parent->left = singleLeaf;
+        minHeap.push(parent);
+    }
+
     Node* root = minHeap.top();
 
     Node* curr = root;
@@ -50,7 +57,6 @@ int main(){
             if (bit == 0) curr = curr->left;
             else curr = curr->right;
 
-            // Arrived at a leaf character node
             if (curr->left == nullptr && curr->right == nullptr) {
                 outFile.put(curr->ch);
                 charactersDecoded++;
