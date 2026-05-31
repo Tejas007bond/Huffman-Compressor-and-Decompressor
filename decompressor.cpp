@@ -1,20 +1,9 @@
 #include<iostream>
 #include<string>
 #include<fstream>
+#include<queue>
+#include<vector>
+#include "huffman.h"
+
 using namespace std;
 
-void decompressFile(const string& inputPath,const string& outputPath){
-    ifstream inFile(inputPath,ios::binary);
-    ofstream outFile(outputPath);
-
-    if(!inFile || !outFile){
-        cout << "Error opening files during compression" << endl;
-        return;
-    }
-
-    int frequency[256] = {0};
-    inFile.read(reinterpret_cast<char*>(frequency),256*sizeof(int));
-}
-
-int main(void){
-}
