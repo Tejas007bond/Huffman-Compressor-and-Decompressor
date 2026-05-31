@@ -18,5 +18,23 @@ int main(){
     
     int frequency[256] = {0};
     inFile.read(reinterpret_cast<char*>(frequency),256*sizeof(int));
-    
+
+    priority_queue<Node*, vector<Node*>, CompareNodes> minHeap;
+    for (int i = 0; i < 256; i++) {
+        if (frequency[i] > 0) {
+            minHeap.push(new Node((char)i, frequency[i]));
+        }
+    }
+
+    if (minHeap.empty()) return 0;
+
+    while (minHeap.size() > 1) {
+        Node* left = minHeap.top(); minHeap.pop();
+        Node* right = minHeap.top(); minHeap.pop();
+        Node* parent = new Node('\0', left->freq + right->freq);
+        parent->left = left; parent->right = right;
+        minHeap.push(parent);
+    }
+
+    Node* root = minHeap.top();
 }
