@@ -37,4 +37,32 @@ int main(){
     }
 
     Node* root = minHeap.top();
+
+    Node* curr = root;
+    int charactersDecoded = 0;
+    int totalCharacters = root->freq;
+    char byte;
+
+    while (inFile.get(byte) && charactersDecoded < totalCharacters) {
+        for (int i = 7; i >= 0; i--) {
+            int bit = (byte >> i) & 1;
+
+            if (bit == 0) curr = curr->left;
+            else curr = curr->right;
+
+            // Arrived at a leaf character node
+            if (curr->left == nullptr && curr->right == nullptr) {
+                outFile.put(curr->ch);
+                charactersDecoded++;
+                curr = root;
+
+                if (charactersDecoded == totalCharacters) break;
+            }
+        }
+    }
+
+    inFile.close();
+    outFile.close();
+    cout << "Decompression complete! Saved to output_restored.txt" << endl;
+    return 0;
 }
