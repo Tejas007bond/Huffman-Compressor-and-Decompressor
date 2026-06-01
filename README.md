@@ -1,4 +1,5 @@
-# Huffman-Compressor-and-Decompressor
+# File Compressor
 
-Compressor :- compresses a txt file using Huffman Coding. This project compresses a large text document into smaller size so it takes less time in sending the file.
+The compressor program is a file compressor which compresses a txt file using huffman coding and the decompressor program decompresses the compressed file back to its original form.
 
+## Installation
